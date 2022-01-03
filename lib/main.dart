@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hiit_routine/workout.dart';
 
 import './workout.dart';
+import './options.dart';
 
 void main() {
   runApp(const MaterialApp(home: MyApp()));
@@ -54,7 +55,13 @@ class _MyAppState extends State<MyApp> {
                 child: Text('OPEN SPOTIFY'),
                 onPressed: null,
               ),
-              const ElevatedButton(child: Text('OPTIONS'), onPressed: null),
+              ElevatedButton(
+                child: Text('OPTIONS'),
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Options()),
+                ),
+              ),
             ],
           ),
         ));
