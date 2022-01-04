@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hiit_routine/workout.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:external_app_launcher/external_app_launcher.dart';
 
 import './workout.dart';
 import './options.dart';
@@ -20,12 +21,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   void _openApp() async {
-    const url = 'https://www.spotify.com';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+    await LaunchApp.openApp(
+      androidPackageName: 'com.spotify.music',
+      iosUrlScheme: 'spotify',
+      appStoreLink:
+          'https://apps.apple.com/us/app/spotify-new-music-and-podcasts/id324684580',
+    );
   }
 
   @override
