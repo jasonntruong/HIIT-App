@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hiit_routine/workout.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import './workout.dart';
 import './options.dart';
@@ -18,6 +19,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  void _openApp() async {
+    const url = 'https://www.spotify.com';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,9 +61,9 @@ class _MyAppState extends State<MyApp> {
                   MaterialPageRoute(builder: (context) => const Workout()),
                 ),
               ),
-              const ElevatedButton(
+              ElevatedButton(
                 child: Text('OPEN SPOTIFY'),
-                onPressed: null,
+                onPressed: _openApp,
               ),
               ElevatedButton(
                 child: Text('OPTIONS'),
