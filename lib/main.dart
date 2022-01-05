@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hiit_routine/workout.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:device_apps/device_apps.dart';
 import 'package:external_app_launcher/external_app_launcher.dart';
 
 import './workout.dart';
@@ -23,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   void _openApp() async {
     await LaunchApp.openApp(
       androidPackageName: 'com.spotify.music',
-      iosUrlScheme: '324684580',
+      iosUrlScheme: 'spotify://',
       appStoreLink:
           'https://apps.apple.com/us/app/spotify-new-music-and-podcasts/id324684580',
     );
