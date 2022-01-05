@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
   void _openApp() async {
     await LaunchApp.openApp(
       androidPackageName: 'com.spotify.music',
-      iosUrlScheme: 'spotify',
+      iosUrlScheme: '324684580',
       appStoreLink:
           'https://apps.apple.com/us/app/spotify-new-music-and-podcasts/id324684580',
     );
