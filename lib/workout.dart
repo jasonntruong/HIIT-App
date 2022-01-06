@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hiit_routine/topbar.dart';
 
 class Workout extends StatefulWidget {
   const Workout({Key? key}) : super(key: key);
@@ -95,23 +96,7 @@ class _WorkoutState extends State<Workout> {
 
     return MaterialApp(
       home: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(100.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              AppBar(
-                centerTitle: true,
-                title: const Text(
-                  'Workout',
-                  style: TextStyle(
-                    fontSize: 50,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        appBar: TopBar('Workout'),
         body: Container(
           width: double.infinity,
           child: Column(

@@ -4,6 +4,7 @@ import 'package:external_app_launcher/external_app_launcher.dart';
 
 import './workout.dart';
 import './options.dart';
+import './topbar.dart';
 
 void main() {
   runApp(const MaterialApp(home: MyApp()));
@@ -31,23 +32,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(100.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              AppBar(
-                centerTitle: true,
-                title: const Text(
-                  'HIIT Routine',
-                  style: TextStyle(
-                    fontSize: 50,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        appBar: TopBar('HIIT Routine'),
         body: Container(
           width: double.infinity,
           child: Column(
