@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,9 +16,11 @@ class Workout extends StatefulWidget {
 
 class _WorkoutState extends State<Workout> {
   late Timer _timer;
+  late bool _firstExecute = true;
 
-  int _exerciseIndex = 0;
+  int _exercise = 1;
   int _time = 0;
+  int _round = 1;
 
   late final _data, _exercises, _rounds, _work, _rest;
   String _currExercise = "N/A";
@@ -32,18 +35,25 @@ class _WorkoutState extends State<Workout> {
     _work = _data[0]["work"];
     _rest = _data[0]["rest"];
 
-    print(_exercises[0]["exercises"].length);
+    print(_exercises.length);
   }
 
   void _nextExercise() async {
+    print("HERE");
+
+    if (_firstExecute) {
+      await _getJson();
+      _firstExecute = false;
+    }
+
     setState(() {
-      _currExercise = _exercises[_exerciseIndex];
+      _currExercise = _exercises[_exercise - 1];
     });
-    _exerciseIndex += 1;
-    _startTime(_work);
+
+    await _startTime(_work);
   }
 
-  void _startTime(int stateTime) async {
+  Future<void> _startTime(int stateTime) async {
     _time = stateTime;
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer _timer) {
       if (_time > 0) {
@@ -62,12 +72,27 @@ class _WorkoutState extends State<Workout> {
     setState(() {
       _timer.cancel();
       _time = 0;
+      print(_exercise.toString());
+      if (_exercise == 5) {
+        if (_round == 3) {
+          Navigator.pop(context);
+        }
+        _exercise = 1;
+        _round += 1;
+      } else {
+        _exercise += 1;
+      }
     });
+
+    _nextExercise();
   }
 
   @override
   Widget build(BuildContext context) {
-    _getJson();
+    if (_firstExecute) {
+      _nextExercise();
+    }
+
     return MaterialApp(
       home: Scaffold(
         appBar: PreferredSize(
@@ -87,19 +112,28 @@ class _WorkoutState extends State<Workout> {
             ],
           ),
         ),
-        body: Column(
-          children: <Widget>[
-            ElevatedButton(
-              child: const Text("Hello"),
-              onPressed: _nextExercise,
-            ),
-            ElevatedButton(
-              child: Text("Stop"),
-              onPressed: _stopTime,
-            ),
-            Text(_currExercise),
-            Text(_time.toString()),
-          ],
+        body: Container(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "ROUND " +
+                    _round.toString() +
+                    " EXERCISE " +
+                    _exercise.toString(),
+              ),
+              Text(
+                _exercises[_exercise - 1],
+              ),
+              Text(
+                _time.toString(),
+              ),
+              (_exercise < 5)
+                  ? Text("Next Exercise: " + _exercises[_exercise])
+                  : const Text("REST"),
+            ],
+          ),
         ),
       ),
     );
