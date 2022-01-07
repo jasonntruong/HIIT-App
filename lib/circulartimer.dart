@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+
+import './workout.dart';
 
 class CircularTimer extends StatelessWidget {
   int totaltime;
   String state;
-  String WORK_ENUM = "WORK";
-  String REST_ENUM = "REST";
+  void Function() nextExercise;
+  CountDownController controller = CountDownController();
 
-  CircularTimer(this.totaltime, this.state);
+  bool firstExecute = true;
+
+  CircularTimer(this.totaltime, this.state, this.nextExercise, this.controller);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class CircularTimer extends StatelessWidget {
         ? CircularCountDownTimer(
             duration: totaltime,
             initialDuration: 0,
-            controller: CountDownController(),
+            controller: controller,
             width: MediaQuery.of(context).size.width / 2,
             height: MediaQuery.of(context).size.height / 2,
             ringColor: Colors.white,
@@ -32,11 +35,15 @@ class CircularTimer extends StatelessWidget {
             isReverseAnimation: true,
             isTimerTextShown: true,
             autoStart: true,
+            onStart: () => {
+              if (controller.getTime() != 0) {nextExercise()}
+            },
+            onComplete: () => controller.start(),
           )
         : CircularCountDownTimer(
             duration: totaltime,
             initialDuration: 0,
-            controller: CountDownController(),
+            controller: controller,
             width: MediaQuery.of(context).size.width / 2,
             height: MediaQuery.of(context).size.height / 2,
             ringColor: Colors.white,
