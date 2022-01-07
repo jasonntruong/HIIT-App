@@ -37,6 +37,7 @@ dependencies:
   url_launcher: ^6.0.17
   external_app_launcher: ^2.0.2
   device_apps:
+  circular_countdown_timer: ^0.2.0
 
 dev_dependencies:
   flutter_test:

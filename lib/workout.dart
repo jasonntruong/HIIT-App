@@ -56,17 +56,19 @@ class _WorkoutState extends State<Workout> {
 
   Future<void> _startTime(int stateTime) async {
     _time = stateTime;
-    _timer = Timer.periodic(const Duration(seconds: 1), (Timer _timer) {
-      if (_time > 0) {
-        setState(() {
-          _time -= 1;
-        });
-      } else {
-        setState(() {
-          _stopTime();
-        });
-      }
-    });
+    if (mounted) {
+      _timer = Timer.periodic(const Duration(seconds: 1), (Timer _timer) {
+        if (_time > 0) {
+          setState(() {
+            _time -= 1;
+          });
+        } else {
+          setState(() {
+            _stopTime();
+          });
+        }
+      });
+    }
   }
 
   void _stopTime() async {
@@ -74,14 +76,16 @@ class _WorkoutState extends State<Workout> {
       _timer.cancel();
       _time = 0;
       print(_exercise.toString());
-      if (_exercise == 5) {
-        if (_round == 3) {
-          Navigator.pop(context);
+      if (mounted) {
+        if (_exercise == 5) {
+          if (_round == 3) {
+            Navigator.pop(context);
+          }
+          _exercise = 1;
+          _round += 1;
+        } else {
+          _exercise += 1;
         }
-        _exercise = 1;
-        _round += 1;
-      } else {
-        _exercise += 1;
       }
     });
 
