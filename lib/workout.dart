@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hiit_routine/topbar.dart';
+import 'circulartimer.dart';
 
 class Workout extends StatefulWidget {
   const Workout({Key? key}) : super(key: key);
@@ -118,6 +120,7 @@ class _WorkoutState extends State<Workout> {
               Text(
                 _time.toString(),
               ),
+              CircularTimer(_work, "WORK"),
               (_exercise < 5)
                   ? Text("Next Exercise: " + _exercises[_exercise])
                   : const Text("REST"),
