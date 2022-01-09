@@ -5,14 +5,13 @@ import './workout.dart';
 
 class WorkTimer extends StatelessWidget {
   int totaltime;
-  String state;
   void Function() nextExercise;
   CountDownController cdcontroller = CountDownController();
   // Color circColor;
 
   bool firstExecute = true;
 
-  WorkTimer(this.totaltime, this.state, this.nextExercise);
+  WorkTimer(this.totaltime, this.nextExercise);
 
   @override
   Widget build(BuildContext context) {

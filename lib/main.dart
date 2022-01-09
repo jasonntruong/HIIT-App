@@ -32,33 +32,34 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: TopBar('HIIT Routine'),
-        body: Container(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              ElevatedButton(
-                child: const Text('START'),
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Workout()),
-                ),
+      appBar: TopBar('HIIT Routine'),
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              child: const Text('START'),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Workout()),
               ),
-              ElevatedButton(
-                child: Text('OPEN SPOTIFY'),
-                onPressed: _openApp,
+            ),
+            ElevatedButton(
+              child: Text('OPEN SPOTIFY'),
+              onPressed: _openApp,
+            ),
+            ElevatedButton(
+              child: Text('OPTIONS'),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Options()),
               ),
-              ElevatedButton(
-                child: Text('OPTIONS'),
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Options()),
-                ),
-              ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

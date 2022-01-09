@@ -5,13 +5,12 @@ import './workout.dart';
 
 class RestTimer extends StatelessWidget {
   int totaltime;
-  String state;
   void Function() nextExercise;
   CountDownController cdcontroller = CountDownController();
 
   bool firstExecute = true;
 
-  RestTimer(this.totaltime, this.state, this.nextExercise);
+  RestTimer(this.totaltime, this.nextExercise);
 
   Widget build(BuildContext context) {
     return CircularCountDownTimer(
