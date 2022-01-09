@@ -6,7 +6,8 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hiit_routine/topbar.dart';
-import 'circulartimer.dart';
+import 'worktimer.dart';
+import 'resttimer.dart';
 
 class Workout extends StatefulWidget {
   const Workout({Key? key}) : super(key: key);
@@ -20,13 +21,15 @@ class Workout extends StatefulWidget {
 class _WorkoutState extends State<Workout> {
   late Timer _timer;
   late bool _firstExecute = true;
-
-  final CountDownController _controller = CountDownController();
+  late WorkTimer _ctimer = WorkTimer(_totaltime, _state, _nextExercise);
+  late RestTimer _rtimer = RestTimer(_totaltime, _state, _nextExercise);
 
   int _exercise = 1;
   int _round = 1;
+  String _state = "REST";
+  int _totaltime = 0;
 
-  late final _data, _exercises, _rounds, _work, _rest;
+  var _data, _exercises, _rounds, _work, _rest;
   String _currExercise = "N/A";
 
   Future<void> _getJson() async {
@@ -61,8 +64,17 @@ class _WorkoutState extends State<Workout> {
     }
 
     setState(() {
-      print("here");
+      if (_state == "WORK") {
+        _state = "REST";
+        _totaltime = _rest;
+      } else {
+        _state = "WORK";
+        _totaltime = _work;
+      }
+    });
+    setState(() {
       _currExercise = _exercises[_exercise - 1];
+      print(_state);
     });
   }
 
@@ -89,11 +101,7 @@ class _WorkoutState extends State<Workout> {
               Text(
                 _exercises[_exercise - 1],
               ),
-              CircularTimer(_work, "WORK", _nextExercise, _controller),
-              ElevatedButton(
-                child: Text("Restart"),
-                onPressed: () => _controller.pause(),
-              ),
+              _state == "WORK" ? _ctimer : _rtimer,
               (_exercise < 5)
                   ? Text("Next Exercise: " + _exercises[_exercise])
                   : const Text("REST"),
